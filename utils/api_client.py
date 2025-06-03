@@ -6,6 +6,22 @@ API_BASE_URL = "https://v3.football.api-sports.io"
 HEADERS = {
     "x-apisports-key": API_FOOTBALL_KEY
 }
+def get_today_matches():
+    from datetime import datetime
+    today = datetime.now().strftime('%Y-%m-%d')
+
+    url = f"https://v3.football.api-sports.io/fixtures?date={today}&timezone=America/Sao_Paulo"
+
+    headers = {
+        'x-apisports-key': API_FOOTBALL_KEY
+    }
+
+    response = requests.get(url, headers=headers)
+    data = response.json()
+
+    if "response" in data:
+        return data["response"]
+    return []
 
 def get_fixture_statistics(fixture_id):
     url = f"{API_BASE_URL}/fixtures/statistics?fixture={fixture_id}"
