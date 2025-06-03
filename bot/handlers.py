@@ -106,3 +106,9 @@ async def btn_ultima(callback_query: types.CallbackQuery):
         await bot.send_message(callback_query.from_user.id, f"📢 *Última Aposta Gerada:*\n\n{aposta}")
     except:
         await bot.send_message(callback_query.from_user.id, "⚠️ Nenhuma aposta gerada ainda hoje.")
+
+@dp.message_handler()
+async def pegar_id_grupo(message: types.Message):
+    chat = message.chat
+    if chat.type in ["group", "supergroup"]:
+        await message.reply(f"🆔 ID do grupo: `{chat.id}`")
