@@ -28,3 +28,9 @@ def get_team_statistics(team_id):
         print(f"Erro ao buscar estatísticas: {response.status_code}")
         return None
 
+def gerar_aposta_segura():
+    return {
+        "jogos": ["Time A", "Time B"],
+        "odd_total": 2.5,
+        "descricao": "Exemplo de aposta segura."
+    }
