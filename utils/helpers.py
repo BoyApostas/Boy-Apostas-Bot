@@ -1,14 +1,17 @@
 # Funções auxiliares como cálculo de odds
-def calcular_odd_combinada(odds):
-    resultado = 1.0
-    for odd in odds:
-        resultado *= odd
-    return round(resultado, 2)
+# utils/helpers.py
 
-def formatar_mensagem_aposta(times, odds):
-    partes = []
-    for time, odd in zip(times, odds):
-        partes.append(f"{time} (odd {odd})")
-    combinada = " + ".join(partes)
-    total = calcular_odd_combinada(odds)
-    return f"Aposta combinada sugerida:\n\n{combinada}\n\nOdd total: {total}"
+from config.config import TELEGRAM_TOKEN, GRUPO_FREE_ID, GRUPO_VIP_ID
+from aiogram import Bot
+
+bot = Bot(token=TELEGRAM_TOKEN)
+
+async def enviar_para_grupos(texto):
+    try:
+        await bot.send_message(chat_id=GRUPO_FREE_ID, text=texto)
+    except Exception as e:
+        print(f"[Erro] ao enviar para grupo free: {e}")
+    try:
+        await bot.send_message(chat_id=GRUPO_VIP_ID, text=texto)
+    except Exception as e:
+        print(f"[Erro] ao enviar para grupo vip: {e}")
