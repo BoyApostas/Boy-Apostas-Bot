@@ -1,30 +1,53 @@
 # Agendamentos diários como envio às 07:00
 import asyncio
-from datetime import datetime, timedelta
-from aiogram import Bot
 from core.predictor import gerar_aposta_segura
-from config.config import BOT_TOKEN, FREE_GROUP_ID, DAILY_POST_HOUR, DAILY_POST_MINUTE
+from utils.helpers import enviar_para_grupos
+from datetime import datetime
+import logging
 
-bot = Bot(token=BOT_TOKEN)
+logging.basicConfig(level=logging.INFO)
 
-async def enviar_aposta_diaria():
-    aposta = gerar_aposta_segura()
+async def executar_rotina_diaria():
     try:
-        await bot.send_message(FREE_GROUP_ID, aposta)
+        agora = datetime.now().strftime("%d/%m/%Y %H:%M")
+        logging.info(f"⏰ Iniciando rotina de apostas: {agora}")
+
+        texto_espera = (
+            "🎯 *Apostas do Dia em Análise...*
+\n"
+            "Nosso sistema está analisando milhares de dados dos principais campeonatos ao redor do mundo
+"
+            "para encontrar combinações com maior chance de acerto!")
+        await enviar_para_grupos(texto_espera)
+
+        aposta_gerada = await gerar_aposta_segura()
+
+        if aposta_gerada:
+            texto_aposta = (
+                "✅ *Aposta Segura do Dia!*
+\n"
+                f"📅 *Data:* {datetime.now().strftime('%d/%m/%Y')}
+"
+                f"📈 *Odd Total:* {aposta_gerada['odd_total']}
+"
+                "\n\n*Jogos Selecionados:*\n"
+            )
+            for jogo in aposta_gerada['jogos']:
+                texto_aposta += f"⚽ {jogo['time']} - Odd {jogo['odd']}
+"
+
+            texto_aposta += (
+                "\n🔍 Análise completa feita com base em desempenho recente, estatísticas ao vivo e comportamento de mercado.
+"
+                "🚀 Recomendamos apostar até 1 hora antes do primeiro jogo!")
+
+            await enviar_para_grupos(texto_aposta)
+        else:
+            await enviar_para_grupos("⚠️ Nenhuma aposta segura foi gerada hoje. O sistema não encontrou combinações confiáveis o suficiente para garantir segurança. Amanhã tem mais!")
+
     except Exception as e:
-        print(f"Erro ao enviar aposta diária: {e}")
+        logging.error(f"Erro na rotina diária: {e}")
+        await enviar_para_grupos("❌ Ocorreu um erro durante a geração das apostas de hoje. Equipe técnica foi notificada.")
 
-def schedule_daily_tasks():
-    asyncio.create_task(agendar_envio_diario())
-
-async def agendar_envio_diario():
-    while True:
-        agora = datetime.now()
-        proximo_envio = agora.replace(hour=DAILY_POST_HOUR, minute=DAILY_POST_MINUTE, second=0, microsecond=0)
-
-        if proximo_envio <= agora:
-            proximo_envio += timedelta(days=1)
-
-        tempo_espera = (proximo_envio - agora).total_seconds()
-        await asyncio.sleep(tempo_espera)
-        await enviar_aposta_diaria()
+if __name__ == "__main__":
+    asyncio.run(executar_rotina_diaria())

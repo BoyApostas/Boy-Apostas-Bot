@@ -1,36 +1,43 @@
 # Gera sugestões de apostas com base nas análises
-import requests
-from config.config import API_FOOTBALL_KEY
-from datetime import datetime
+import random
+from utils.api_client import get_today_matches
 
-API_BASE_URL = "https://v3.football.api-sports.io"
-HEADERS = {"x-apisports-key": API_FOOTBALL_KEY}
-
-def get_fixtures_today():
-    today = datetime.now().strftime("%Y-%m-%d")
-    url = f"{API_BASE_URL}/fixtures?date={today}"
-    response = requests.get(url, headers=HEADERS)
-
-    if response.status_code == 200:
-        data = response.json()
-        return data["response"]
-    else:
-        print(f"Erro ao buscar jogos do dia: {response.status_code}")
-        return []
-
-def get_team_statistics(team_id):
-    url = f"{API_BASE_URL}/teams/statistics?team={team_id}&season=2024&league=39"
-    response = requests.get(url, headers=HEADERS)
-
-    if response.status_code == 200:
-        return response.json().get("response", {})
-    else:
-        print(f"Erro ao buscar estatísticas: {response.status_code}")
-        return None
 
 def gerar_aposta_segura():
-    return {
-        "jogos": ["Time A", "Time B"],
-        "odd_total": 2.5,
-        "descricao": "Exemplo de aposta segura."
-    }
+    partidas = get_today_matches()
+
+    favoritas = []
+    for jogo in partidas:
+        home = jogo['homeTeam']['name']
+        away = jogo['awayTeam']['name']
+        odds = jogo.get('odds', {})
+        home_win = odds.get('homeWin')
+
+        # Critérios para times favoritos com baixa odd
+        if home_win and home_win <= 1.35:
+            favoritas.append({
+                'time': home,
+                'contra': away,
+                'odd': home_win
+            })
+
+    favoritas = sorted(favoritas, key=lambda x: x['odd'])
+
+    combinadas = []
+    total_odd = 1.0
+    for f in favoritas:
+        combinadas.append(f)
+        total_odd *= f['odd']
+        if total_odd >= 2.3:
+            break
+
+    if not combinadas or total_odd < 2.0:
+        return None  # Nenhuma combinação segura suficiente
+
+    mensagem = "🔥 *Aposta Segura do Dia* 🔥\n\n"
+    for c in combinadas:
+        mensagem += f"✅ {c['time']} vence o {c['contra']} (odd: {c['odd']})\n"
+    mensagem += f"\n*Odd Total:* `{round(total_odd, 2)}`\n"
+    mensagem += "\n⏰ Enviada automaticamente pelo bot com base nas análises estatísticas do dia."
+
+    return mensagem
