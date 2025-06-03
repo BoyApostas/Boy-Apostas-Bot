@@ -1,6 +1,6 @@
 # Token do Bot Telegram
 TELEGRAM_TOKEN = "8056306367:AAH87N0CFwVyA07O9eTDSZOMllwHhs9LkK4"
-
+BOT_TOKEN = "8056306367:AAH87N0CFwVyA07O9eTDSZOMllwHhs9LkK4"
 # Chave Pix para pagamento do grupo VIP
 PIX_KEY = "boyapostaspix@gmail.com"
 
