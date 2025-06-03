@@ -13,10 +13,8 @@ async def executar_rotina_diaria():
         logging.info(f"⏰ Iniciando rotina de apostas: {agora}")
 
         texto_espera = (
-            "🎯 *Apostas do Dia em Análise...*
-\n"
-            "Nosso sistema está analisando milhares de dados dos principais campeonatos ao redor do mundo
-"
+            "🎯 *Apostas do Dia em Análise...*\n"
+            "Nosso sistema está analisando milhares de dados dos principais campeonatos ao redor do mundo"
             "para encontrar combinações com maior chance de acerto!")
         await enviar_para_grupos(texto_espera)
 
@@ -24,21 +22,16 @@ async def executar_rotina_diaria():
 
         if aposta_gerada:
             texto_aposta = (
-                "✅ *Aposta Segura do Dia!*
-\n"
-                f"📅 *Data:* {datetime.now().strftime('%d/%m/%Y')}
-"
-                f"📈 *Odd Total:* {aposta_gerada['odd_total']}
-"
+                "✅ *Aposta Segura do Dia!*\n"
+                f"📅 *Data:* {datetime.now().strftime('%d/%m/%Y')}"
+                f"📈 *Odd Total:* {aposta_gerada['odd_total']}"
                 "\n\n*Jogos Selecionados:*\n"
             )
             for jogo in aposta_gerada['jogos']:
-                texto_aposta += f"⚽ {jogo['time']} - Odd {jogo['odd']}
-"
+                texto_aposta += f"⚽ {jogo['time']} - Odd {jogo['odd']}"
 
             texto_aposta += (
-                "\n🔍 Análise completa feita com base em desempenho recente, estatísticas ao vivo e comportamento de mercado.
-"
+                "\n🔍 Análise completa feita com base em desempenho recente, estatísticas ao vivo e comportamento de mercado."
                 "🚀 Recomendamos apostar até 1 hora antes do primeiro jogo!")
 
             await enviar_para_grupos(texto_aposta)
