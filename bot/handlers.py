@@ -6,7 +6,7 @@ import logging
 
 logging.basicConfig(level=logging.INFO)
 
-bot = Bot(token=TELEGRAM_TOKEN, parse_mode='MarkdownV2')
+bot = Bot(token=TELEGRAM_TOKEN, parse_mode='Markdown')
 dp = Dispatcher(bot)
 
 # Teclado principal com comandos aprimorados
