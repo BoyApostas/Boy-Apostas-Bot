@@ -55,8 +55,9 @@ async def grupo_vip(message: types.Message):
         "- Suporte personalizado\n"
         "- Entradas com odds de até *10.0*\n\n"
         f"📲 Chave Pix para pagamento: `{PIX_KEY}`\n\n"
-        "Após o pagamento, envie o comprovante aqui e você será liberado automaticamente no VIP!\n\n"
-        f"Grupo VIP: {GRUPO_VIP_LINK}"
+        "Após o pagamento, envie o comprovante aqui. "
+        "Um administrador irá liberar seu acesso ao grupo VIP manualmente.\n\n"
+        "*Atenção: O acesso é individual e exclusivo para pagantes.*\n\n"
     )
 
 @dp.callback_query_handler(lambda c: c.data == "vip_info")
@@ -70,8 +71,8 @@ async def info_vip(callback_query: types.CallbackQuery):
         "- Suporte personalizado\n"
         "- Entradas com odds de até *10.0*\n\n"
         f"📲 Chave Pix para pagamento: `{PIX_KEY}`\n\n"
-        "Após o pagamento, envie o comprovante aqui e você será liberado automaticamente no VIP!\n\n"
-        f"Grupo VIP: {GRUPO_VIP_LINK}"
+        "Atenção: O acesso ao grupo VIP será liberado manualmente pelo administrador após o pagamento e validação do comprovante.\n\n"
+
     )
 
 @dp.callback_query_handler(lambda c: c.data == "info")
