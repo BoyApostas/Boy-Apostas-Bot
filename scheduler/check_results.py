@@ -1,7 +1,7 @@
 # Verifica se apostas bateram (Green/Red)
 import asyncio
 from aiogram import Bot
-from config.config import BOT_TOKEN, FREE_GROUP_ID
+from config.config import BOT_TOKEN, GRUPO_FREE_ID
 from datetime import datetime
 from core.predictor import gerar_aposta_segura
 
