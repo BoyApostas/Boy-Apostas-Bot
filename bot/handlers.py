@@ -109,6 +109,5 @@ async def btn_ultima(callback_query: types.CallbackQuery):
 
 @dp.message_handler()
 async def pegar_id_grupo(message: types.Message):
-    chat = message.chat
-    if chat.type in ["group", "supergroup"]:
-        await message.reply(f"🆔 ID do grupo: `{chat.id}`")
+    if message.chat.type in ["group", "supergroup"]:
+        await message.reply(f"🆔 ID do grupo: `{message.chat.id}`")
