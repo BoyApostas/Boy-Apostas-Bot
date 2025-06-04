@@ -10,18 +10,49 @@ def get_today_matches():
     from datetime import datetime
     today = datetime.now().strftime('%Y-%m-%d')
 
-    url = f"https://v3.football.api-sports.io/fixtures?date={today}&timezone=America/Sao_Paulo"
+    # Buscar jogos do dia
+    url = f"{API_BASE_URL}/fixtures?date={today}&timezone=America/Sao_Paulo"
+    resp = requests.get(url, headers=HEADERS)
+    data = resp.json()
 
-    headers = {
-        'x-apisports-key': API_FOOTBALL_KEY
-    }
-
-    response = requests.get(url, headers=headers)
-    data = response.json()
+    jogos_formatados = []
 
     if "response" in data:
-        return data["response"]
-    return []
+        for jogo in data["response"]:
+            fixture_id = jogo['fixture']['id']
+            home = jogo['teams']['home']['name']
+            away = jogo['teams']['away']['name']
+
+            # Buscar odds para este jogo
+            odds_url = f"{API_BASE_URL}/odds?fixture={fixture_id}&bookmaker=6"  # Bet365 é 6 na API-Football
+            odds_resp = requests.get(odds_url, headers=HEADERS)
+            odds_data = odds_resp.json()
+            odd_home_win = None
+
+            # Decodificando odds (simples: mercado 'Match Winner')
+            try:
+                # A API pode retornar odds de vários mercados e casas
+                # Procurar pelo mercado "Match Winner"
+                for result in odds_data['response']:
+                    for bookmaker in result.get('bookmakers', []):
+                        for bet in bookmaker.get('bets', []):
+                            if bet['name'] in ["Match Winner", "1x2"]:
+                                for odd in bet['values']:
+                                    if odd['value'] == 'Home':
+                                        odd_home_win = float(odd['odd'])
+                # Se não achou, deixa None
+            except Exception as e:
+                odd_home_win = None
+
+            jogos_formatados.append({
+                'homeTeam': {'name': home},
+                'awayTeam': {'name': away},
+                'odds': {
+                    'homeWin': odd_home_win
+                }
+            })
+
+    return jogos_formatados
 
 def get_fixture_statistics(fixture_id):
     url = f"{API_BASE_URL}/fixtures/statistics?fixture={fixture_id}"

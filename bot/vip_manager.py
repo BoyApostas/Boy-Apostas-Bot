@@ -1,7 +1,7 @@
 # Gerencia usuários VIP e pagamentos
 from datetime import datetime, timedelta
 
-# Simula um banco de dados simples na memória (você pode trocar por um real depois)
+# Simula um banco de dados simples na memória 
 usuarios_vip = {}
 
 def ativar_vip(user_id: int):
