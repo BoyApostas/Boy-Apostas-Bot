@@ -13,8 +13,8 @@ GRUPO_FREE_LINK = "https://t.me/+hBaBOF7qSVw0ZGUx"
 GRUPO_VIP_LINK = "https://t.me/+1Deb4RL0C5lkNzEx"
 
 # ID dos grupos 
-FREE_GROUP_ID = int(os.getenv("FREE_GROUP_ID", "-1000000000000"))
-VIP_GROUP_ID = int(os.getenv("VIP_GROUP_ID", "-1000000000000"))
+FREE_GROUP_ID = int(os.getenv("FREE_GROUP_ID", "-1002699089968"))
+VIP_GROUP_ID = int(os.getenv("VIP_GROUP_ID", "-4986663140"))
 
 # Preço do VIP
 VIP_PRECO = 19.90
