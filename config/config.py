@@ -9,7 +9,8 @@ BOT_TOKEN = TELEGRAM_TOKEN
 PIX_KEY = "boyapostaspix@gmail.com"
 
 # Links dos grupos
-GRUPO_FREE_LINK = "https://t.me/+hBaBOF7qSVw0ZGUx"
+
+GRUPO_FREE_LINK = "https://t.me/boyapostas"
 GRUPO_VIP_LINK = "https://t.me/+1Deb4RL0C5lkNzEx"
 
 # ID dos grupos 
