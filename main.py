@@ -2,13 +2,8 @@
 from aiogram import executor
 from bot.handlers import dp
 from scheduler.daily_tasks import start_scheduler
-import threading
-
-def iniciar_scheduler_em_thread():
-    thread = threading.Thread(target=start_scheduler)
-    thread.daemon = True
-    thread.start()
+import asyncio
 
 if __name__ == "__main__":
-    iniciar_scheduler_em_thread()
+    start_scheduler()
     executor.start_polling(dp, skip_updates=True)
