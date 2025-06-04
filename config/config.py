@@ -1,6 +1,6 @@
 # Token do Bot Telegram
-TELEGRAM_TOKEN = "8056306367:AAH87N0CFwVyA07O9eTDSZOMllwHhs9LkK4"
-BOT_TOKEN = "8056306367:AAH87N0CFwVyA07O9eTDSZOMllwHhs9LkK4"
+TELEGRAM_TOKEN = "8056306367:AAEyaeX-lToKYDN-LIkgn-O6-em-OdtB84c"
+BOT_TOKEN = "8056306367:AAEyaeX-lToKYDN-LIkgn-O6-em-OdtB84c"
 # Chave Pix para pagamento do grupo VIP
 PIX_KEY = "boyapostaspix@gmail.com"
 
@@ -11,6 +11,7 @@ GRUPO_VIP_LINK = "https://t.me/+1Deb4RL0C5lkNzEx"
 # ID dos grupos 
 GRUPO_FREE_ID = None  
 GRUPO_VIP_ID = None
+FREE_GROUP_ID = int(os.getenv("FREE_GROUP_ID", "-1000000000000"))
 
 # Preço do VIP 
 VIP_PRECO = 19.90
