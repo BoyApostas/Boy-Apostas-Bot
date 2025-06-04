@@ -24,8 +24,8 @@ def get_main_menu():
 @dp.message_handler(commands=["start"])
 async def start(message: types.Message):
     text = (
-       text = (
-    "👋 *Bem-vindo ao Boy Apostas!*\n\n"
+    
+   "👋 *Bem-vindo ao Boy Apostas!*\n\n"
     "📊 Sou um bot inteligente que analisa *estatísticas reais de jogos ao vivo* e monta apostas com *alta probabilidade de acerto* todos os dias!\n\n"
     "🚀 Veja como funciona:\n"
     "• Envio diário de *apostas seguras* com base em dados reais (odds entre 2.0 e 2.5)\n"
@@ -38,7 +38,6 @@ async def start(message: types.Message):
     "• Suporte prioritário e entrada antecipada\n\n"
     "🎯 *Segurança, transparência e resultados reais!*\n\n"
     "👇 Escolha abaixo por onde deseja começar:"
-)
     )
     await message.answer(text, reply_markup=get_main_menu())
 
