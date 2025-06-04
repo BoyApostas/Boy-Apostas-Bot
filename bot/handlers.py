@@ -23,9 +23,8 @@ def get_main_menu():
 
 @dp.message_handler(commands=["start"])
 async def start(message: types.Message):
-    text = (
-    
-   "👋 *Bem-vindo ao Boy Apostas!*\n\n"
+  text = (
+    "👋 *Bem-vindo ao Boy Apostas!*\n\n"
     "📊 Sou um bot inteligente que analisa *estatísticas reais de jogos ao vivo* e monta apostas com *alta probabilidade de acerto* todos os dias!\n\n"
     "🚀 Veja como funciona:\n"
     "• Envio diário de *apostas seguras* com base em dados reais (odds entre 2.0 e 2.5)\n"
@@ -38,18 +37,7 @@ async def start(message: types.Message):
     "• Suporte prioritário e entrada antecipada\n\n"
     "🎯 *Segurança, transparência e resultados reais!*\n\n"
     "👇 Escolha abaixo por onde deseja começar:"
-    )
-    await message.answer(text, reply_markup=get_main_menu())
-
-@dp.message_handler(commands=["ajuda"])
-async def ajuda(message: types.Message):
-    await message.answer(
-        "❓ *Comandos Disponíveis:*\n"
-        "/start - Menu principal\n"
-        "/free - Acesso rápido ao grupo Free\n"
-        "/vip - Informações sobre o VIP\n"
-        "/ajuda - Ver esta ajuda"
-    )
+)
 
 @dp.message_handler(commands=["free"])
 async def grupo_free(message: types.Message):
