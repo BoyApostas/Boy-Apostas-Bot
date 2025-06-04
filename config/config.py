@@ -4,7 +4,7 @@ from dotenv import load_dotenv
 
 load_dotenv()
 
-TELEGRAM_TOKEN = "8056306367:AAEyaeX-lToKYDN-LIkgn-O6-em-OdtB84c"
+TELEGRAM_TOKEN = "8078202817:AAHFo-sym1fZt0ajMFExBro2xBzL0DVRKxA"
 BOT_TOKEN = TELEGRAM_TOKEN  
 PIX_KEY = "boyapostaspix@gmail.com"
 
