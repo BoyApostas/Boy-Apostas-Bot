@@ -1,15 +1,15 @@
 # Arquivo principal do bot Boy Apostas
-import threading
-from aiogram import executor
-from bot.handlers import dp
+import asyncio
+import logging
 from scheduler.daily_tasks import start_scheduler
+from bot.handlers import dp, bot
 
-def iniciar_scheduler_em_thread():
-    thread = threading.Thread(target=start_scheduler, name="AgendadorDeApostas")
-    thread.daemon = True
-    thread.start()
+async def main():
+    logging.basicConfig(level=logging.INFO)
+    start_scheduler()  # Inicia o agendador que roda as tarefas diárias (como as apostas às 07:00)
+    await bot.delete_webhook(drop_pending_updates=True)
+    await dp.start_polling()
 
 if __name__ == "__main__":
-    print("🔄 Iniciando bot Boy Apostas...")
-    iniciar_scheduler_em_thread()
-    executor.start_polling(dp, skip_updates=True)
+    print("🚀 Iniciando Boy Apostas no Render (modo Background Worker)...")
+    asyncio.run(main())
