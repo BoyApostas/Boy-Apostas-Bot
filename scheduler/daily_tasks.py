@@ -1,16 +1,10 @@
 # Agendamentos diários como envio às 07:00
+import asyncio
 import schedule
 import time
-import asyncio
+import logging
 from core.predictor import gerar_aposta_segura
 from utils.helpers import enviar_para_grupos
-import logging
-
-logging.basicConfig(level=logging.INFO)
-
-def schedule_daily_tasks():
-    schedule.every(1).minutes.do(lambda: asyncio.run(gerar_e_enviar()))
-    logging.info("📅 Tarefa agendada para 07:00 da manhã, todos os dias.")
 
 async def gerar_e_enviar():
     logging.info("🚀 Iniciando geração da aposta segura...")
@@ -29,7 +23,12 @@ async def gerar_e_enviar():
         logging.warning("⚠️ Nenhuma aposta foi gerada hoje. Nenhuma entrada enviada.")
 
 def start_scheduler():
-    schedule_daily_tasks()
-    while True:
-        schedule.run_pending()
-        time.sleep(60)  # Verifica a cada minuto
+    schedule.every().day.at("07:00").do(lambda: asyncio.create_task(gerar_e_enviar()))
+    logging.info("📅 Tarefa agendada para 07:00 da manhã, todos os dias.")
+
+    async def run_scheduler():
+        while True:
+            schedule.run_pending()
+            await asyncio.sleep(1)
+
+    asyncio.create_task(run_scheduler())
