@@ -9,7 +9,7 @@ import logging
 logging.basicConfig(level=logging.INFO)
 
 def schedule_daily_tasks():
-    schedule.every().day.at("07:00").do(lambda: asyncio.run(gerar_e_enviar()))
+    schedule.every(1).minutes.do(lambda: asyncio.run(gerar_e_enviar()))
     logging.info("📅 Tarefa agendada para 07:00 da manhã, todos os dias.")
 
 async def gerar_e_enviar():
