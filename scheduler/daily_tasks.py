@@ -23,7 +23,8 @@ async def gerar_e_enviar():
         logging.warning("⚠️ Nenhuma aposta foi gerada hoje. Nenhuma entrada enviada.")
 
 def start_scheduler():
-    schedule.every().day.at("07:00").do(lambda: asyncio.create_task(gerar_e_enviar()))
+    schedule.every(1).minutes.do(lambda: asyncio.create_task(gerar_e_enviar()))
+
     logging.info("📅 Tarefa agendada para 07:00 da manhã, todos os dias.")
 
     async def run_scheduler():
